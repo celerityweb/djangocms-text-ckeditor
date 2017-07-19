@@ -81,8 +81,8 @@ $(document).ready(function () {
         if (addButtons{{ ckeditor_function }}.data('isInitCMSCKEditor') !== 'yes') {
 
             addButtons{{ ckeditor_function }}.click(function () {
-                var container = '{{ ckeditor_function }}';
-                container = container.replace('id_', '#').replace('___prefix___media', '-group');
+                var parts = '{{ ckeditor_function }}'.split('___');
+                container = parts[0].replace('id_', '#') + '-group';
                 initCMSCKEditor{{ ckeditor_function }}(container + ' .CMS_CKEditor');
             });
             addButtons{{ ckeditor_function }}.data('isInitCMSCKEditor', 'yes');
