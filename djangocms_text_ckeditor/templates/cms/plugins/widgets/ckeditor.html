@@ -14,9 +14,15 @@
 (function($) {
 // CMS.$ will be passed for $
 $(document).ready(function () {
-    function initCMSCKEditor{{ ckeditor_function }}() {
-        if ($('#{{ ckeditor_selector }}:visible').length > 0) {
-            $('#{{ ckeditor_selector }}:visible').each(function() {
+    function initCMSCKEditor{{ ckeditor_function }}(target) {
+
+        // fall back to default CKEditor parameter
+        if (target === undefined) {
+            target = '#{{ ckeditor_selector }}';
+        }
+
+        if ($(target + ':visible').length > 0) {
+            $(target + ':visible').each(function() {
                 var editor = $(this);
 
                 if (editor.data('isCKEditorInitialized')) {
@@ -75,12 +81,14 @@ $(document).ready(function () {
         if (addButtons{{ ckeditor_function }}.data('isInitCMSCKEditor') !== 'yes') {
 
             addButtons{{ ckeditor_function }}.click(function () {
-                initCMSCKEditor{{ ckeditor_function }}();
+                var container = '{{ ckeditor_function }}';
+                container = container.replace('id_', '#').replace('___prefix___media', '-group');
+                initCMSCKEditor{{ ckeditor_function }}(container + ' .CMS_CKEditor');
             });
             addButtons{{ ckeditor_function }}.data('isInitCMSCKEditor', 'yes');
         }
     }
-    //initialize ckeditor when a collapsed row is extended
+    // initialize ckeditor when a collapsed row is extended
     $("#{{ ckeditor_selector }}").closest("fieldset.collapse").find("a.collapse-toggle").click(function(e) {
         var $this = $(this);
         if (!$this.closest("fieldset").hasClass("collapsed") && $this.data('isInitCMSCKEditor_{{ ckeditor_selector }}') != 'yes') {
@@ -89,6 +97,19 @@ $(document).ready(function () {
             $this.data('isInitCMSCKEditor_{{ ckeditor_selector }}', 'yes');
         }
     });
+
+    // re-init when tab is changed
+    (function($) {
+        $("#tabs").on('tabsactivate', function(event, ui) {
+            (function($) {
+                var $this = $(this);
+                if (!$this.data('isInitCMSCKEditor_{{ ckeditor_selector }}') != 'yes') {
+                    initCMSCKEditor{{ ckeditor_function }}();
+                    $this.data('isInitCMSCKEditor_{{ ckeditor_selector }}', 'yes');
+                }
+            })(CMS.$);
+        });
+    })(django.jQuery);
 });
 })(CMS.$);
 </script>
