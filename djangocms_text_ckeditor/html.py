@@ -4,12 +4,12 @@ import re
 import uuid
 
 import html5lib
+from django.utils.module_loading import import_string
 from django.utils.six import BytesIO
 from html5lib import sanitizer, serializer, treebuilders, treewalkers
 from PIL import Image
 
 from . import settings
-from .compat import import_string
 from .sanitizer import TextSanitizer
 from .utils import plugin_to_tag
 
@@ -94,7 +94,7 @@ def extract_images(data, plugin):
             mime_type = mime_type.split(";")[0]
         try:
             image_data = base64.b64decode(image_data)
-        except:
+        except Exception:
             image_data = base64.urlsafe_b64decode(image_data)
         try:
             image_type = mime_type.split("/")[1]

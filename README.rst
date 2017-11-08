@@ -27,21 +27,6 @@ This plugin requires `django CMS` 3.3 or higher to be properly installed.
 * Add ``djangocms_text_ckeditor`` to your ``INSTALLED_APPS`` (the order does not matter).
 * Run ``manage.py migrate djangocms_text_ckeditor``.
 
-Some notes:
-***********
-
-* If upgrading from previous ``djangocms_text_ckeditor``, be aware that the
-  names of the migration modules have changed:
-
-  * Django 1.6: ``djangocms_text_ckeditor.migrations`` to
-    ``djangocms_text_ckeditor.south_migrations``
-  * Django 1.7: ``djangocms_text_ckeditor.migrations_django`` to
-    ``djangocms_text_ckeditor.migrations``
-* If using Django 1.6 add ``'djangocms_text_ckeditor': 'djangocms_text_ckeditor.south_migrations',``
-  to ``SOUTH_MIGRATION_MODULES``  (or define ``SOUTH_MIGRATION_MODULES`` if it does not exists);
-* If using Django 1.7 and you were using version prior to 2.5, remove
-  ``djangocms_text_ckeditor`` from ``MIGRATION_MODULES``;
-
 
 Upgrading from ``cms.plugins.text``
 -----------------------------------
@@ -258,7 +243,7 @@ within ``Placeholder`` fields.
 If you need to allow additional plugins to be embedded in a HTML field, convert the ``HTMLField`` to a ``Placeholderfield``
 and configure the placeholder to only accept TextPlugin. For more information on using placeholders outside of the CMS see:
 
-http://docs.django-cms.org/en/latest/introduction/templates_placeholders.html
+http://docs.django-cms.org/en/latest/how_to/placeholders.html
 
 
 Auto Hyphenate Text
@@ -335,7 +320,7 @@ Adding plugins to the "CMS Plugins" dropdown
 If you have another plugin that you want to use inside texts you can make them appear in the dropdown by making them text_enabled.
 Check in `django-cms doc`_ how to do this.
 
-.. _django-cms doc: http://docs.django-cms.org/en/latest/reference/plugins.html#text-enabled
+.. _django-cms doc: http://docs.django-cms.org/en/latest/reference/plugins.html#cms.plugin_base.CMSPluginBase.text_enabled
 
 Configurable sanitizer
 ----------------------
