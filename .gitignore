@@ -106,3 +106,6 @@ venv.bak/
 # Custom
 *.sqlite3
 *.sqlite
+
+# Allow Bundle
+!djangocms_text_ckeditor/js/dist/bundle-*.cms.ckeditor.min.js
